@@ -21,8 +21,9 @@
     "test:integration": "mocha \"test/integration/**/*.js\"",
     "test:unit": "mocha \"test/unit/**/*.js\""
   },
-  "dependencies": {
-    "mongoose": "^4.0.0"
+  "peerDependencies": {
+    "koa": ">=2.0.0",
+    "koa-session": ">=5.0.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -43,10 +44,6 @@
     "sinon": "^4.1.2",
     "sinon-chai": "^2.14.0",
     "supertest": "^3.0.0"
-  },
-  "peerDependencies": {
-    "koa": ">=2.0.0",
-    "koa-session": ">=5.0.0"
   },
   "engines": {
     "node": ">=8.3.0"
