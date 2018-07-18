@@ -26,8 +26,7 @@ describe('MongooseStore', () => {
       remove: sinon.spy(async () => session)
     };
     mongoose = {
-      model: sinon.spy(() => model),
-      Schema: sinon.spy(() => schema)
+      model: sinon.spy(() => model)
     };
     schema = { _id: String, data: Object, updatedAt: { expires: 86400 } };
     MongooseStore = proxyquire('../../lib', { mongoose, './schema': schema });
@@ -59,12 +58,6 @@ describe('MongooseStore', () => {
       expect(store.session).to.equal(model);
     });
 
-    it('should call mongoose.Schema', () => {
-      const store = new MongooseStore();
-      expect(mongoose.Schema).to.have.been.calledWith(schema);
-      expect(store.session).to.equal(model);
-    });
-
     it('should use a custom collection name when options.collection is set', () => {
       const collection = 'foos';
       const expectedArgs = [ options.name, schema, collection ];
@@ -75,14 +68,11 @@ describe('MongooseStore', () => {
 
     it('should use a custom mongoose connection when options.connection is set', () => {
       const connection = {
-        model: sinon.spy(() => model),
-        Schema: sinon.spy(() => schema)
+        model: sinon.spy(() => model)
       };
       const expectedArgs = [ options.name, schema, options.collection ];
       const store = new MongooseStore({ connection });
-      expect(connection.Schema).to.have.been.calledWith(schema);
       expect(connection.model).to.have.been.calledWith(...expectedArgs);
-      expect(mongoose.Schema).to.not.have.been.called();
       expect(mongoose.model).to.not.have.been.called();
       expect(store.session).to.equal(model);
     });
@@ -92,7 +82,6 @@ describe('MongooseStore', () => {
       const updatedAt = { ...schema.updatedAt, expires };
       const expectedSchema = { ...schema, updatedAt };
       const store = new MongooseStore({ expires });
-      expect(mongoose.Schema).to.have.been.calledWith(expectedSchema);
       expect(store.session).to.equal(model);
     });
 
